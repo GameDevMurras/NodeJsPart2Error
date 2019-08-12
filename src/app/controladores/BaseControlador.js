@@ -46,15 +46,18 @@ class BaseControlador
 
                if(erro)
                {
-                   return next(erro);
+                    return next(erro);
                }
 
-               req.login(usuario, (erro)=>
+               req.login(usuario, (erroLogin)=>
                {
-                   return next(erro);
-               });
+                   if(erroLogin)
+                   { 
+                    return next(erroLogin);
+                   }
+                });
 
-               console.log("Até aqui funciona! O problema é a instrução abaixo");
+               
               
                return resp.redirect(LivroControlador.rotas().lista);    
                

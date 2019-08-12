@@ -1,6 +1,8 @@
 require('marko/node-require').install();
 require('marko/express');
 
+const templates = require("../app/views/templates");
+
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -28,12 +30,15 @@ rotas(app);
 
 app.use(function(req, res, next)
 {
-  res.status(404).marko(require("../app/views/base/erros/404.marko"));
+  res.status(404).marko(templates.base.err404);
+  next();
 });
 
 app.use(function(error, req, res, next)
 {
-  res.status(500).marko(require("../app/views/base/erros/500.marko"));
+ console.log(`Erro: ${error}`);
+  res.status(500).marko(templates.base.err500);
+  next();
 });
 
 module.exports = app;
